@@ -1,9 +1,0 @@
-Package: miRNA_target_package
-Type: Package
-Title: Package for finding miRNA-mRNA interactions.
-Version: 0.0.1
-Date: 2015-09-25
-Author: Camilla Skoglund and Trung Ngo Trong
-Maintainer: Camilla Skoglund <camgu844@student.liu.se>
-Description: The package can be used to find interactions between microRNA (miRNA) and messengerRNA (mRNA). It connects to targetHub, which is a database of miRNA-mRNA interactions.
-License: GPL-2
