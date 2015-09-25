@@ -111,7 +111,7 @@ str(content(basic_design_doc, "parsed"))
 # Function to execute GET                                                                                                                                               
 
 targetHub_GET <- function("http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/", path, ...) {
-  res <- GET(path, ...)
+  res <- GET("http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/", path, ...)
   targetHub_check(res)
   res
 }
