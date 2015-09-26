@@ -109,10 +109,14 @@ library(jsonlite)
                                                                                                                                                
                                                                                                                                                                                                                                                                                              
 # Function to execute GET                                                                                                                                               
-
-targetHub_GET <- function(path, evidence_count, ...) {
-  path_q <- paste(giUrl, "?key=\"", sym, "\"", sep='')
-  res <- GET(path, ...)
+# tries to do a function where the arguments are geneID and evidence_count
+#but is not working yet....
+targetHub_by_gene_GET <- function(geneID, evidence_count, ...) {
+  std_URL <- "http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view"
+  query_option <- "by_geneIDcount"
+  query <- paste("?key=\",geneID,"\", sep='')
+  path <- paste(std_URL, query_option, query)
+  res <- GET(path, evidence_count)
   targetHub_check(res)
   res
 }
@@ -139,4 +143,5 @@ targetHub_parse <- function(res) {
 targetHub_GET("http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/by_geneIDcount"
               paste(giUrl, "?key=\"", sym, "\"", sep='')
               ?key=["672",3]")   
+
 
