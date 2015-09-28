@@ -64,6 +64,11 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
   	url <- paste(base_url, alt, option, query, sep="")
 	print(url)
 
+	if (class(gene) == "character")
+		gene = tolower(gene)
+	if (class(data_source) == "character")
+		data_source = tolower(data_source)
+
 	## create result
 	ret <- list()
 	ret$url = url
@@ -90,7 +95,7 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 # x = tmp$extract()
 # tmp = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212", 4)
 # x = tmp$extract()
-# tmp = miRNA_target_interactions("mature miRNA", "evidence count", "hsa-miR-212-3p", 4)
+# tmp = miRNA_target_interactions("mature miRNA", "evidence count", "HSA-miR-212-3p", 4)
 # x = tmp$extract()
-# tmp = miRNA_target_interactions("gene", "Specific Method", 672,  "miranda+pictar4+targetscan")
+# tmp = miRNA_target_interactions("gene", "Specific Method", 672,  "miranda+pictar4+TargeTscan")
 # x = tmp$extract()
