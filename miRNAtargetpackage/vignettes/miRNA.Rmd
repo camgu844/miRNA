@@ -9,7 +9,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-```{r}
+```{r include=FALSE}
 library(miRNAtargetpackage)
 library(jsonlite)
 library(httr)
