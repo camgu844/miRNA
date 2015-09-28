@@ -31,6 +31,7 @@ parse_response <- function(req) {
 #'						specific method: Specific Methods
 #' @param gene geneID character \emph{hsa-miR-212-3p} or numeric \emph{672}
 #' @param data_source character \emph{miranda+mirtarbase+pictar4+targetscan} or numeric \emph{3}
+#' @param include_docs TRUE or FALSE document for each gene
 #' @return targetHub object.
 #' @examples
 #' tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)
@@ -41,7 +42,7 @@ parse_response <- function(req) {
 #' x = tmp$extract()
 #' # supported by atleast three data sources/methods
 #' x = tmp$atleast()
-miRNA_target_interactions <- function(query_alt, search_option, gene, data_source) {
+miRNA_target_interactions <- function(query_alt, search_option, gene, data_source, include_docs=FALSE) {
 	## parse url into GET query
   	base_url <- "http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/"
   	alt <- "NA"
@@ -61,6 +62,10 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 		query <- paste('?key=["', gene, '",', data_source, ']', sep='')
 	}else
 		query <- paste('?key=["', gene, '","', data_source, '"]', sep='')
+
+	docs_str = ''
+	if (isTRUE(include_docs))
+		docs_str = '&include_docs=true'
   	url <- paste(base_url, alt, option, query, sep="")
 	# print(url)
 
@@ -75,7 +80,8 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 	class(ret) = "targetHub"
 
 	ret$extract = function(){
-	  print(url)
+	  	url = paste(url, docs_str, sep="")
+	  	print(url)
 		req = GET(url)
 		res = parse_response(req)
 	}
@@ -83,7 +89,7 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 	ret$atleast = function(){
 		stopifnot (class(data_source) == "numeric")
 
-		url = paste(url,'&endkey=["',gene,'",{}]',sep="")
+		url = paste(url,'&endkey=["', gene, '",{}]', docs_str, sep="")
 		print(url)
 		req = GET(url)
 		res = parse_response(req)
@@ -92,8 +98,14 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 }
 
 
-# tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)
-# x = tmp$extract()
+tmp = miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
+x = tmp$atleast()
+print(length(x$rows))
+print(x$rows[[1]]$value)
+# [1] "hsa-miR-132-3p"
+print(x$rows[[2]]$value)
+# [1] "hsa-miR-212-3p"
+
 # tmp = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212", 4)
 # x = tmp$extract()
 # tmp = miRNA_target_interactions("mature miRNA", "evidence count", "HSA-miR-212-3p", 4)
