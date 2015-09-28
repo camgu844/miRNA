@@ -1,4 +1,4 @@
 library(testthat)
-library(linregpackage)
+library(miRNAtargetpackage)
 
-test_check("linregpackage")
+test_check("miRNAtargetpackage")
