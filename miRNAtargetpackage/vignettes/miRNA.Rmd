@@ -1,5 +1,5 @@
 ---
-title: "Workflow for linreg"
+title: "Workflow for R with TargetHub"
 author: "Trung and Camilia"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -12,6 +12,7 @@ vignette: >
 ```{r}
 library(miRNAtargetpackage)
 library(jsonlite)
+library(httr)
 ```
 
 ### 1. Query by gene
@@ -68,7 +69,7 @@ print(jsonlite::toJSON(tmp$atleast()))
 miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by _PicTar (5)__
 
 ```{r}
-tmp = miRNA_target_interactions("stem-loop miRNA", "sepcific method", "hsa-mir-212",  "pictar5")
+tmp = miRNA_target_interactions("stem-loop miRNA", "specific method", "hsa-mir-212",  "pictar5")
 print(tmp$extract())
 print(jsonlite::toJSON(tmp$extract()))
 ```
@@ -95,14 +96,14 @@ print(jsonlite::toJSON(tmp$extract()))
 miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by **atleast** four data sources/methods
 
 ```{r}
-print(tmp$atleast())
-print(jsonlite::toJSON(tmp$atleast()))
+print(tmp$extract())
+print(jsonlite::toJSON(tmp$extract()))
 ```
 
 miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by _TargetScan_
 
 ```{r}
-tmp = miRNA_target_interactions("mature miRNA", "sepcific method", "hsa-mir-212-3p",  "targetscan")
+tmp = miRNA_target_interactions("mature miRNA", "specific method", "hsa-mir-212-3p",  "targetscan")
 print(tmp$extract())
 print(jsonlite::toJSON(tmp$extract()))
 ```
