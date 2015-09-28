@@ -64,6 +64,11 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
   	url <- paste(base_url, alt, option, query, sep="")
 	print(url)
 
+	if (class(gene) == "character")
+		gene = tolower(gene)
+	if (class(data_source) == "character")
+		data_source = tolower(data_source)
+
 	## create result
 	ret <- list()
 	ret$url = url

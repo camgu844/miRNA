@@ -1,0 +1,104 @@
+---
+title: "Workflow for linreg"
+author: "Trung and Camilia"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r}
+library(miRNAtargetpackage)
+```
+
+### 1. Query by gene
+
+miRNA-target interactions of Entrez Gene \"672\" (BRCA1) that are supported by **exactly** three data sources/methods
+
+```{r}
+tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)
+print(tmp$extract())
+```
+
+miRNA-target interactions of Entrez Gene \"672\" (BRCA1) that are supported by **atleast** three data sources/methods
+
+```{r}
+print(tmp$atleast())
+```
+
+miRNA-target interactions of Entrez Gene \"672\" (BRCA1) that are supported by **miRTarBase**
+
+```{r}
+tmp = miRNA_target_interactions("gene", "specific method", 672,  "mirtarbase")
+print(tmp$extract())
+```
+_Note_: only extract method available for database as data source.
+
+miRNA-target interactions of Entrez Gene \"672\" (BRCA1) that are supported by **three** methods _miRanda, PicTar and TargetScan_
+
+```{r}
+tmp = miRNA_target_interactions("gene", "specific method", 672,  "miranda+pictar4+targetscan")
+print(tmp$extract())
+```
+
+### 2. Query by stem-loop miRNA
+
+miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by **exactly** four data sources/methods
+
+```{r}
+tmp = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212",  4)
+print(tmp$extract())
+```
+
+miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by **atleast** three data sources/methods
+
+```{r}
+print(tmp$atleast())
+```
+
+miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by _PicTar (5)__
+
+```{r}
+tmp = miRNA_target_interactions("stem-loop miRNA", "sepcific method", "hsa-mir-212",  "pictar5")
+print(tmp$extract())
+```
+_Note_: only extract method available for database as data source.
+
+miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by four methods _miRanda, miRTarBase, PicTar (4)and TargetScan_
+
+```{r}
+tmp = miRNA_target_interactions("stem-loop miRNA", "specific method", "hsa-mir-212",  "miranda+mirtarbase+pictar4+targetscan")
+print(tmp$extract())
+```
+
+### 3. Query by mature miRNA
+
+Evidence Count	miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by **exactly** four data sources/methods
+
+```{r}
+tmp = miRNA_target_interactions("mature miRNA", "evidence count", "hsa-miR-212-3p",  4)
+print(tmp$extract())
+```
+
+miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by **atleast** four data sources/methods
+
+```{r}
+print(tmp$atleast())
+```
+
+miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by _TargetScan_
+
+```{r}
+tmp = miRNA_target_interactions("mature miRNA", "sepcific method", "hsa-mir-212-3p",  "targetscan")
+print(tmp$extract())
+```
+_Note_: only extract method available for database as data source.
+
+miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by two methods _miRanda and TargetScan_
+
+```{r}
+tmp = miRNA_target_interactions("mature miRNA", "specific method", "hsa-miR-212-3p",  "miranda+targetscan")
+print(tmp$extract())
+```
