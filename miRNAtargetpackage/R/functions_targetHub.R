@@ -62,7 +62,7 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 	}else
 		query <- paste('?key=["', gene, '","', data_source, '"]', sep='')
   	url <- paste(base_url, alt, option, query, sep="")
-	print(url)
+	# print(url)
 
 	if (class(gene) == "character")
 		gene = tolower(gene)
@@ -75,6 +75,7 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 	class(ret) = "targetHub"
 
 	ret$extract = function(){
+	  print(url)
 		req = GET(url)
 		res = parse_response(req)
 	}
