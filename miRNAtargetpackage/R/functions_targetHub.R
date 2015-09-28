@@ -91,6 +91,10 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
   	return(ret)
 }
 
+tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)
+x = tmp$extract()
+x
+x$rows[[1]]$value
 
 # tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)
 # x = tmp$extract()
