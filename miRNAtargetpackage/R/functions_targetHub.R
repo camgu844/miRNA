@@ -75,6 +75,7 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 	class(ret) = "targetHub"
 
 	ret$extract = function(){
+	  print(url)
 		req = GET(url)
 		res = parse_response(req)
 	}
