@@ -37,7 +37,7 @@ library(jsonlite)
 #stringi::stri_enc_detect(content(doc, "raw"))
 #[[1]]
 #[[1]]$Encoding
-#[1] "ISO-8859-1" "ISO-8859-2" "UTF-8"      "UTF-16BE"   "UTF-16LE"   "Shift_JIS"  "GB18030"    "EUC-JP"     "EUC-KR"     "Big5"      
+#[1] "ISO-8859-1" "ISO-8859-2" "UTF-8"      "UTF-16BE"   "UTF-16LE"   "Shift_JIS"  "GB18030"    "EUC-JP"     "EUC-KR"     "Big5"
 #[11] "ISO-8859-9"
 
 #[[1]]$Language
@@ -71,7 +71,7 @@ library(jsonlite)
 #str(content(basic_design_doc, "parsed"))
 
 #Truncated result:
-  
+
 #  List of 11
 #$ _id         : chr "_design/basic"
 #$ _rev        : chr "492-fb5f0fcc1023d7e8404b4c9b6625b946"
@@ -93,22 +93,22 @@ library(jsonlite)
 #..$ manifest       :List of 103
 
 #To use the API, each of the "HTTP calls" should be preceeded by:
-  
+
 #http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/
-  
-  
+
+
 #Get error message when running this code, why?:
-  
+
 #  Q_gene <- GET("http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/by_geneIDcount?key=["672",3]")
 #Error: unexpected numeric constant in "Q_gene <- GET("http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/by_geneIDcount?key=["672"
-       
 
-                                                                                                                                               
-                                                                                                                                               
-######  Functions   ##############                                                                                                                                               
-                                                                                                                                               
-                                                                                                                                                                                                                                                                                             
-# Function to execute GET                                                                                                                                               
+
+
+
+######  Functions   ##############
+
+
+# Function to execute GET
 # tries to do a function where the arguments are geneID and evidence_count
 #but is not working yet....
 targetHub_by_gene_GET <- function(geneID, evidence_count, ...) {
@@ -120,7 +120,7 @@ targetHub_by_gene_GET <- function(geneID, evidence_count, ...) {
   targetHub_check(res)
   res
 }
-  
+
 # Check function:
 
 targetHub_check <- function(res) {
@@ -142,6 +142,6 @@ targetHub_parse <- function(res) {
 
 targetHub_GET("http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/by_geneIDcount"
               paste(giUrl, "?key=\"", sym, "\"", sep='')
-              ?key=["672",3]")   
+              ?key=["672",3]")
 
 
