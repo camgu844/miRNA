@@ -1,3 +1,6 @@
+library(httr)
+library(jsonlite)
+
 # A function that converts the user's request into a http call.
 
 request <- function(query_alt, gene, search_option, data_source) {
@@ -67,12 +70,11 @@ miRNA_target_interactions <- function (query_alt, gene, search_option, data_sour
 miRNA_target_interactions("by gene", 672, "evidence count", 3)
 
 #results in:
-Response [http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/by_geneIDcount?key=["672",3]]
-Date: 2015-09-28 10:02
-Status: 200
-Content-Type: application/json
-Size: 119 B
-{"total_rows":4621385,"offset":3499033,"rows":[
-  {"id":"hsa-mir-132:672","key":["672",3],"value":"hsa-miR-132-3p"}
-  ]}
-
+#Response [http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/by_geneIDcount?key=["672",3]]
+#Date: 2015-09-28 10:02
+#Status: 200
+#Content-Type: application/json
+#Size: 119 B
+#{"total_rows":4621385,"offset":3499033,"rows":[
+#  {"id":"hsa-mir-132:672","key":["672",3],"value":"hsa-miR-132-3p"}
+#  ]}
