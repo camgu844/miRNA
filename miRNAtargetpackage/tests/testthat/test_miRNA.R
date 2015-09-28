@@ -1,4 +1,6 @@
 library(miRNAtargetpackage)
+library(httr)
+
 context("tests the function miRNA_target_interactions")
 
 tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)

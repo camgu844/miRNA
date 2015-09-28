@@ -6,18 +6,30 @@
 obtained various external data sources and in some cases computed in-house
 by algorithms implemented for miRNA target prediction.}
 \usage{
+<<<<<<< HEAD
 miRNA_target_interactions(query_alt, gene, search_option, data_source)
+=======
+miRNA_target_interactions(query_alt, search_option, gene, data_source)
+>>>>>>> 2f30562a8598120de1d5de5805ad4de22e11edaf
 }
 \arguments{
 \item{query_alt}{gene: Query by gene
 stem-loop miRNA: Query by stem-loop miRNA
 mature miRNA: Query by mature miRNA}
 
+<<<<<<< HEAD
 \item{gene}{geneID character \emph{hsa-miR-212-3p} or numeric \emph{672}}
 
 \item{search_option}{evidence count: Evidence Count
 specific method: Specific Methods}
 
+=======
+\item{search_option}{evidence count: Evidence Count
+specific method: Specific Methods}
+
+\item{gene}{geneID character \emph{hsa-miR-212-3p} or numeric \emph{672}}
+
+>>>>>>> 2f30562a8598120de1d5de5805ad4de22e11edaf
 \item{data_source}{character \emph{miranda+mirtarbase+pictar4+targetscan} or numeric \emph{3}}
 }
 \value{
