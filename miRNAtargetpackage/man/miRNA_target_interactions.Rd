@@ -4,10 +4,11 @@
 \alias{miRNA_target_interactions}
 \title{targetHub is a database of miRNA-mRNA interactions. The interaction data is
 obtained various external data sources and in some cases computed in-house
-by algorithms implemented for miRNA target prediction.}
+by algorithms implemented for miRNA target prediction.
+Note: the include_docs option is always TRUE}
 \usage{
 miRNA_target_interactions(query_alt, search_option, gene, data_source,
-  include_docs = FALSE)
+  atleast = FALSE)
 }
 \arguments{
 \item{query_alt}{gene: Query by gene
@@ -21,7 +22,7 @@ specific method: Specific Methods}
 
 \item{data_source}{character \emph{miranda+mirtarbase+pictar4+targetscan} or numeric \emph{3}}
 
-\item{include_docs}{TRUE or FALSE document for each gene}
+\item{atleast}{TRUE or FALSE document for each gene}
 }
 \value{
 targetHub object.
@@ -30,6 +31,7 @@ targetHub object.
 targetHub is a database of miRNA-mRNA interactions. The interaction data is
 obtained various external data sources and in some cases computed in-house
 by algorithms implemented for miRNA target prediction.
+Note: the include_docs option is always TRUE
 }
 \examples{
 tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)

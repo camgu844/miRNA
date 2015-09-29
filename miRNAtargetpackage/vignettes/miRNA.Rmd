@@ -36,91 +36,99 @@ miRNA-target interactions of Entrez Gene \"672\" (BRCA1) that are supported by *
 
 ```{r}
 miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
+# Gene
+	print('1-------------------')
+	r = miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
+	print(r$url)
+	print(head(as.list(r)))
 
+	print('2-------------------')
+	r = miRNA_target_interactions("gene", "specific method", 672,  3, TRUE)
+	print(r$url)
+	print(head(as.list(r)))
+
+	
 ```
 
 
 miRNA-target interactions of Entrez Gene \"672\" (BRCA1) that are supported by **miRTarBase**
 
 ```{r}
-#tmp = miRNA_target_interactions("gene", "specific method", 672,  "mirtarbase")
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
-```
-_Note_: only extract method available for database as data source.
+	r = miRNA_target_interactions("gene", "specific method", 672,  "mirtarbase", TRUE)
+	print(r$url)
+	print(head(as.list(r)))
 
-miRNA-target interactions of Entrez Gene \"672\" (BRCA1) that are supported by **three** methods _miRanda, PicTar and TargetScan_
+	print('4-------------------')
+	r = miRNA_target_interactions("gene", "specific method", 672,  "mirtarbase", FALSE)
+	print(r$url)
+	print(head(as.list(r)))
 
-```{r}
-#tmp = miRNA_target_interactions("gene", "specific method", 672,  "miranda+pictar4+targetscan")
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
 ```
 
 ### 2. Query by stem-loop miRNA
 
-miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by **exactly** four data sources/methods
+miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by **atleast** four data sources/methods
 
 ```{r}
-#tmp = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212",  4)
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
-```
+print('5-------------------')
+	r = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212",  4)
+	print(r$url)
+	print(head(as.list(r)))
 
-miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by **atleast** three data sources/methods
-
-```{r}
-#print(tmp$atleast())
-#print(jsonlite::toJSON(tmp$atleast()))
+	print('6-------------------')
+	r = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212",  4, TRUE)
+	print(r$url)
+	print(head(as.list(r)))
 ```
 
 miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by _PicTar (5)__
 
 ```{r}
-#tmp = miRNA_target_interactions("stem-loop miRNA", "specific method", "hsa-mir-212",  "pictar5")
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
+print('7-------------------')
+	r = miRNA_target_interactions("stem-loop miRNA", "specific method", "hsa-mir-212", "pictar5")
+	print(r$url)
+	print(head(as.list(r)))
 ```
-_Note_: only extract method available for database as data source.
 
 miRNA-target interactions of miRNA \"hsa-mir-212\" that are supported by four methods _miRanda, miRTarBase, PicTar (4)and TargetScan_
 
 ```{r}
-#tmp = miRNA_target_interactions("stem-loop miRNA", "specific method", "hsa-mir-212",  "miranda+mirtarbase+pictar4+targetscan")
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
+print('8-------------------')
+	r = miRNA_target_interactions("stem-loop miRNA", "specific method", "hsa-mir-212", "miranda+mirtarbase+pictar4+targetscan", TRUE)
+	print(r$url)
+	print(head(as.list(r)))
 ```
 
 ### 3. Query by mature miRNA
 
-Evidence Count	miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by **exactly** four data sources/methods
-
-```{r}
-#tmp = miRNA_target_interactions("mature miRNA", "evidence count", "hsa-miR-212-3p",  4)
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
-```
-
 miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by **atleast** four data sources/methods
 
 ```{r}
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
+print('9-------------------')
+	r = miRNA_target_interactions("mature miRNA", "evidence count", "hsa-miR-212-3p",  4)
+	print(r$url)
+	print(head(as.list(r)))
+
+	print('10-------------------')
+	r = miRNA_target_interactions("mature miRNA", "evidence count", "hsa-miR-212-3p",  4, TRUE)
+	print(r$url)
+	print(head(as.list(r)))
 ```
 
 miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by _TargetScan_
 
 ```{r}
-#tmp = miRNA_target_interactions("mature miRNA", "specific method", "hsa-mir-212-3p",  "targetscan")
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
+print('11-------------------')
+	r = miRNA_target_interactions("mature miRNA", "specific method", "hsa-miR-212-3p", "targetscan")
+	print(r$url)
+	print(head(as.list(r)))
 ```
-_Note_: only extract method available for database as data source.
 
 miRNA-target interactions of mature miRNA \"hsa-miR-212-3p\" (stem-loop: hsa-mir-212) that are supported by two methods _miRanda and TargetScan_
 
 ```{r}
-#tmp = miRNA_target_interactions("mature miRNA", "specific method", "hsa-miR-212-3p",  "miranda+targetscan")
-#print(tmp$extract())
-#print(jsonlite::toJSON(tmp$extract()))
+print('12-------------------')
+	r = miRNA_target_interactions("mature miRNA", "specific method", "hsa-miR-212-3p", "miranda+targetscan", TRUE)
+	print(r$url)
+	print(head(as.list(r)))
 ```
