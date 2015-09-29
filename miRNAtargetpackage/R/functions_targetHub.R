@@ -26,7 +26,7 @@ parse_response <- function(req) {
 #' targetHub is a database of miRNA-mRNA interactions. The interaction data is
 #' obtained various external data sources and in some cases computed in-house
 #' by algorithms implemented for miRNA target prediction.
-#'
+#' Note: the include_docs option is always TRUE
 #' @param query_alt gene: Query by gene
 #'					stem-loop miRNA: Query by stem-loop miRNA
 #'					mature miRNA: Query by mature miRNA
@@ -34,7 +34,7 @@ parse_response <- function(req) {
 #'						specific method: Specific Methods
 #' @param gene geneID character \emph{hsa-miR-212-3p} or numeric \emph{672}
 #' @param data_source character \emph{miranda+mirtarbase+pictar4+targetscan} or numeric \emph{3}
-#' @param include_docs TRUE or FALSE document for each gene
+#' @param atleast TRUE or FALSE document for each gene
 #' @return targetHub object.
 #' @examples
 #' tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)
@@ -45,94 +45,139 @@ parse_response <- function(req) {
 #' x = tmp$extract()
 #' # supported by atleast three data sources/methods
 #' x = tmp$atleast()
-miRNA_target_interactions <- function(query_alt, search_option, gene, data_source, include_docs=FALSE) {
-  ## parse url into GET query
+miRNA_target_interactions <- function(query_alt, search_option, gene, data_source, atleast=FALSE) {
+	## preprocessing
+  	query_alt = tolower(query_alt)
+	search_option = tolower(search_option)
+
+  	## parse url into GET query
   	base_url <- "http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/"
   	alt <- "NA"
-  	query_alt = tolower(query_alt)
   	if (query_alt == "gene") alt <- "by_geneID"
   	if (query_alt == "stem-loop mirna") alt <- "by_miRNAID"
   	if (query_alt == "mature mirna") alt <- "by_matureMIR"
   	stopifnot (!alt == "NA")
 
 	option <- "NA"
-	search_option = tolower(search_option)
 	if (search_option == "evidence count") option <- "count"
 	if (search_option == "specific method") option <- "method"
 	stopifnot (!option == "NA")
 
 	if (class(data_source) == "numeric"){
-		query <- paste('?key=["', gene, '",', data_source, ']', sep='')
+		query <- paste('["', gene, '",', data_source, ']', sep='')
 	}else
-		query <- paste('?key=["', gene, '","', data_source, '"]', sep='')
+		query <- paste('["', gene, '","', data_source, '"]', sep='')
 
-	docs_str = ''
-	if (isTRUE(include_docs))
-		docs_str = '&include_docs=true'
-  	url <- paste(base_url, alt, option, query, sep="")
-	# print(url)
-
-	if (class(gene) == "character")
-		gene = tolower(gene)
-	if (class(data_source) == "character")
-		data_source = tolower(data_source)
+	docs_str = '&include_docs=true'
 
 	## create result
 	ret <- list()
-	ret$url = url
+	ret$query_alt = query_alt
+	ret$search_option = search_option
+	ret$gene = gene
+	ret$data_source = data_source
 	class(ret) = "targetHub"
 
-	ret$extract = function(){
-	  	url = paste(url, docs_str, sep="")
-	  	print(url)
-		req = GET(url)
-		res = parse_response(req)
-	}
-
-	ret$atleast = function(){
-		stopifnot (class(data_source) == "numeric")
-
-		url = paste(url,'&endkey=["', gene, '",{}]', docs_str, sep="")
+	if (isTRUE(atleast)){
+		# stopifnot (class(data_source) == "numeric")
+  		url <- paste(base_url, alt, option,'?startkey=', query, '&endkey=["', gene, '",{}]', docs_str, sep="")
 		print(url)
 		req = GET(url)
-		res = parse_response(req)
+		ret$response = parse_response(req)
+	}else {
+  		url <- paste(base_url, alt, option,'?key=', query, docs_str, sep="")
+		req = GET(url)
+		ret$response = parse_response(req)
 	}
 
-	if (class(data_source) == "numeric") {
-	  x <- ret$atleast()
-	  le <- length(x$rows)
-	  print("Interactions:")
-	  for (i in 1:le) {
-	    print(x$rows[[i]]$value)
-	  }
-	}
-	else {
-	  x <- ret$extract
-	}
+	ret$url = url
+	ret$json = jsonlite::prettify(jsonlite::toJSON(ret$response))
+
   	return(ret)
 }
 
+print.targetHub = function(x, ...){
+	res = x$response
+	if (class(x$data_source) == "numeric") {
+	  le <- length(res$rows)
+	  for (i in 1:le) {
+	  	print(paste("Interactions:", res$rows[[i]]$id,'-', res$rows[[i]]$value))
+	  }
+	}
+	else {
+		rows = res$rows
+		for (i in 1:length(rows)){
+			r = rows[[i]]
+			print(paste("Interaction:",r$id,'-',r$value))
+		}
+	}
+}
 
-#Examples
-miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
+# Gene
+if (FALSE){
+	print('1-------------------')
+	r = miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
+	print(r$url)
+	print(r)
 
-# miRNA_target_interactions("mature miRNA", "evidence count", "HSA-miR-212-3p", 3, TRUE)  #does not work to search with a miRNA, as this example!
+	print('2-------------------')
+	r = miRNA_target_interactions("gene", "specific method", 672,  3, TRUE)
+	print(r$url)
+	print(r)
 
-# miRNA_target_interactions("gene", "Specific Method", 672,  "miranda+pictar4+TargeTscan", TRUE) #does not work! 
+	print('3-------------------')
+	r = miRNA_target_interactions("gene", "specific method", 672,  "mirtarbase", TRUE)
+	print(r$url)
+	print(r)
 
+	print('4-------------------')
+	r = miRNA_target_interactions("gene", "specific method", 672,  "mirtarbase", FALSE)
+	print(r$url)
+	print(r)
+}
 
-#tmp = miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
-#x = tmp$atleast()
-#print(length(x$rows))
-#print(x$rows[[1]]$value)
-# [1] "hsa-miR-132-3p"
-#print(x$rows[[2]]$value)
-# [1] "hsa-miR-212-3p"
+#  stem-loop miRNA
+if (FALSE){
+	print('5-------------------')
+	r = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212",  4)
+	print(r$url)
+	print(r)
 
+	print('6-------------------')
+	r = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212",  4, TRUE)
+	print(r$url)
+	print(r)
 
-# tmp = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212", 4)
-# x = tmp$extract()
-# tmp = miRNA_target_interactions("mature miRNA", "evidence count", "HSA-miR-212-3p", 4)
-# x = tmp$extract()
-# tmp = miRNA_target_interactions("gene", "Specific Method", 672,  "miranda+pictar4+TargeTscan")
-# x = tmp$extract()
+	print('7-------------------')
+	r = miRNA_target_interactions("stem-loop miRNA", "specific method", "hsa-mir-212", "pictar5")
+	print(r$url)
+	print(r)
+
+	print('8-------------------')
+	r = miRNA_target_interactions("stem-loop miRNA", "specific method", "hsa-mir-212", "miranda+mirtarbase+pictar4+targetscan", TRUE)
+	print(r$url)
+	print(r)
+}
+
+#   mature miRNA
+if (FALSE){
+	print('9-------------------')
+	r = miRNA_target_interactions("mature miRNA", "evidence count", "hsa-miR-212-3p",  4)
+	print(r$url)
+	print(r)
+
+	print('10-------------------')
+	r = miRNA_target_interactions("mature miRNA", "evidence count", "hsa-miR-212-3p",  4, TRUE)
+	print(r$url)
+	print(r)
+
+	print('11-------------------')
+	r = miRNA_target_interactions("mature miRNA", "specific method", "hsa-miR-212-3p", "targetscan")
+	print(r$url)
+	print(r)
+
+	print('12-------------------')
+	r = miRNA_target_interactions("mature miRNA", "specific method", "hsa-miR-212-3p", "miranda+targetscan", TRUE)
+	print(r$url)
+	print(r)
+}
