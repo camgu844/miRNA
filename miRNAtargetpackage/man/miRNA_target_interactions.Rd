@@ -6,7 +6,8 @@
 obtained various external data sources and in some cases computed in-house
 by algorithms implemented for miRNA target prediction.}
 \usage{
-miRNA_target_interactions(query_alt, search_option, gene, data_source)
+miRNA_target_interactions(query_alt, search_option, gene, data_source,
+  include_docs = FALSE)
 }
 \arguments{
 \item{query_alt}{gene: Query by gene
@@ -19,6 +20,8 @@ specific method: Specific Methods}
 \item{gene}{geneID character \emph{hsa-miR-212-3p} or numeric \emph{672}}
 
 \item{data_source}{character \emph{miranda+mirtarbase+pictar4+targetscan} or numeric \emph{3}}
+
+\item{include_docs}{TRUE or FALSE document for each gene}
 }
 \value{
 targetHub object.

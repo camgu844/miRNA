@@ -1,7 +1,10 @@
-# require library:
-# httr
-# XML
-# jsonlite
+# Required libraries:
+
+library(httr)
+library(httr)
+library(XML)
+library(jsonlite)
+
 
 # Check function:
 parse_response <- function(req) {
@@ -43,7 +46,7 @@ parse_response <- function(req) {
 #' # supported by atleast three data sources/methods
 #' x = tmp$atleast()
 miRNA_target_interactions <- function(query_alt, search_option, gene, data_source, include_docs=FALSE) {
-	## parse url into GET query
+  ## parse url into GET query
   	base_url <- "http://app1.bioinformatics.mdanderson.org/tarhub/_design/basic/_view/"
   	alt <- "NA"
   	query_alt = tolower(query_alt)
@@ -94,21 +97,33 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 		req = GET(url)
 		res = parse_response(req)
 	}
+
+	x <- ret$atleast()
+	le <- length(x$rows)
+	print("Interactions:")
+	for (i in 1:le) {
+	  print(x$rows[[i]]$value)
+	}
   	return(ret)
 }
 
-tmp = miRNA_target_interactions("gene", "evidence count", 672,  3)
-x = tmp$extract()
-x
-x$rows[[1]]$value
 
-tmp = miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
-x = tmp$atleast()
-print(length(x$rows))
-print(x$rows[[1]]$value)
+#Examples
+miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
+
+# miRNA_target_interactions("mature miRNA", "evidence count", "HSA-miR-212-3p", 3, TRUE)  #does not work to search with a miRNA, as this example!
+
+# miRNA_target_interactions("gene", "Specific Method", 672,  "miranda+pictar4+TargeTscan") #does not work! 
+
+
+#tmp = miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
+#x = tmp$atleast()
+#print(length(x$rows))
+#print(x$rows[[1]]$value)
 # [1] "hsa-miR-132-3p"
-print(x$rows[[2]]$value)
+#print(x$rows[[2]]$value)
 # [1] "hsa-miR-212-3p"
+
 
 # tmp = miRNA_target_interactions("stem-loop miRNA", "evidence count", "hsa-mir-212", 4)
 # x = tmp$extract()
