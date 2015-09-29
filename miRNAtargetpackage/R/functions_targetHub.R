@@ -98,11 +98,16 @@ miRNA_target_interactions <- function(query_alt, search_option, gene, data_sourc
 		res = parse_response(req)
 	}
 
-	x <- ret$atleast()
-	le <- length(x$rows)
-	print("Interactions:")
-	for (i in 1:le) {
-	  print(x$rows[[i]]$value)
+	if (class(data_source) == "numeric") {
+	  x <- ret$atleast()
+	  le <- length(x$rows)
+	  print("Interactions:")
+	  for (i in 1:le) {
+	    print(x$rows[[i]]$value)
+	  }
+	}
+	else {
+	  x <- ret$extract
 	}
   	return(ret)
 }
@@ -113,7 +118,7 @@ miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
 
 # miRNA_target_interactions("mature miRNA", "evidence count", "HSA-miR-212-3p", 3, TRUE)  #does not work to search with a miRNA, as this example!
 
-# miRNA_target_interactions("gene", "Specific Method", 672,  "miranda+pictar4+TargeTscan") #does not work! 
+# miRNA_target_interactions("gene", "Specific Method", 672,  "miranda+pictar4+TargeTscan", TRUE) #does not work! 
 
 
 #tmp = miRNA_target_interactions("gene", "evidence count", 672,  3, TRUE)
