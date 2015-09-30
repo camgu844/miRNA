@@ -1,0 +1,7 @@
+* installing *source* package 'miRNAtargetpackage' ...
+** R
+** preparing package for lazy loading
+Error in library(httr) : there is no package called 'httr'
+Error : unable to load R code in package 'miRNAtargetpackage'
+ERROR: lazy loading failed for package 'miRNAtargetpackage'
+* removing 'C:/Users/camgu49/DOCUME~1/R-WORK~1/gitfiler/miRNA/MIRNAT~1.RCH/miRNAtargetpackage'
