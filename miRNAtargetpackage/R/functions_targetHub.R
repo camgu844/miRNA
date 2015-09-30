@@ -1,9 +1,9 @@
 # Required libraries:
 
-library(httr)
+# library(httr)
 #library(XML)
-library(jsonlite)
-library(stringi)
+# library(jsonlite)
+# library(stringi)
 
 
 

@@ -1,7 +1,20 @@
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_TIME failed, using "C" 
+3: Setting LC_MESSAGES failed, using "C" 
+4: Setting LC_MONETARY failed, using "C" 
 * installing *source* package 'miRNAtargetpackage' ...
 ** R
+** inst
 ** preparing package for lazy loading
-Error in library(httr) : there is no package called 'httr'
-Error : unable to load R code in package 'miRNAtargetpackage'
-ERROR: lazy loading failed for package 'miRNAtargetpackage'
-* removing 'C:/Users/camgu49/DOCUME~1/R-WORK~1/gitfiler/miRNA/MIRNAT~1.RCH/miRNAtargetpackage'
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_TIME failed, using "C" 
+3: Setting LC_MESSAGES failed, using "C" 
+4: Setting LC_MONETARY failed, using "C" 
+* DONE (miRNAtargetpackage)
