@@ -1,0 +1,14 @@
+as.list.targetHub       Function that creates a list from a targetHub
+                        object.
+miRNA_target_interactions
+                        targetHub is a database of miRNA-mRNA
+                        interactions. The interaction data is obtained
+                        various external data sources and in some cases
+                        computed in-house by algorithms implemented for
+                        miRNA target prediction. Note: the include_docs
+                        option is always TRUE
+miRNAtargetpackage-package
+                        Package for finding miRNA-mRNA interactions.
+parse_response          Function that checks the status and parses the
+                        response.
+print.targetHub         Function that prints the interactions.
